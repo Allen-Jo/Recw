@@ -30,7 +30,7 @@
 
 <footer class="footer mt-auto py-3">
   <div class="container">
-    <span class="text-muted">Place sticky footer content here.</span>
+    <span class="text-muted">Copyright © Baskin-Robbins 31(조수찬,최종원,이자훈) [더인] All rights reserved. </span>
   </div>
 </footer>
 
