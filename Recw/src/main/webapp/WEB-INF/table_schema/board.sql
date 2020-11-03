@@ -1,0 +1,55 @@
+CREATE TABLE MEMBER
+(
+    MEM_NUM     NUMBER(5)      PRIMARY KEY, 
+    MEM_EMAIL       VARCHAR2(20)   NOT NULL, 
+    MEM_PASSWORD    VARCHAR2(20)   NOT NULL, 
+    MEM_NICKNAME    VARCHAR2(20)   NOT NULL, 
+    MEM_REG_DATE    DATE           NOT NULL, 
+    MEM_LEVEL       NUMBER(1)		NOT NULL
+);
+/
+select * from member;
+drop table member;
+INSERT INTO MEMBER(MEM_NUM, MEM_EMAIL, MEM_PASSWORD, MEM_NICKNAME, MEM_REG_DATE, MEM_LEVEL) VALUES
+			(member_SEQ.nextval, 'admin@admin', '1', 'admin', sysdate, 0)
+		
+CREATE SEQUENCE member_SEQ
+START WITH 1
+INCREMENT BY 1;
+/
+
+CREATE OR REPLACE TRIGGER member_AI_TRG
+BEFORE INSERT ON member 
+REFERENCING NEW AS NEW FOR EACH ROW 
+BEGIN 
+    SELECT member_SEQ.NEXTVAL
+    INTO :NEW.mem_num
+    FROM DUAL;
+END;
+/
+
+--DROP TRIGGER member_AI_TRG;
+/
+DROP SEQUENCE seq;
+--DROP SEQUENCE member_SEQ;
+/
+
+COMMENT ON COLUMN member.mem_num IS 'member_number'
+/
+
+COMMENT ON COLUMN member.EMAIL IS '이메일주소'
+/
+
+COMMENT ON COLUMN member.PASSWORD IS '비밀번호'
+/
+
+COMMENT ON COLUMN member.NICKNAME IS '닉네임'
+/
+
+COMMENT ON COLUMN member.REG_DATE IS '등록시간'
+/
+
+COMMENT ON COLUMN member.LEVEL IS '등급'
+/
+
+SELECT COUNT(*) FROM MEMBER WHERE MEM_NICKNAME = 'a';
