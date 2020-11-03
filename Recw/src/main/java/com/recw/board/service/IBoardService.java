@@ -15,7 +15,7 @@ public interface IBoardService {
 
   public void remove(Integer board_num) throws Exception;
 
-  public List<BoardVO> list() throws Exception;
+  public List<BoardVO> getBoardList() throws Exception;
   
   
 	/*

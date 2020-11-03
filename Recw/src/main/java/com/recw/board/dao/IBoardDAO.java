@@ -16,9 +16,9 @@ public interface IBoardDAO {
 
   public void delete(Integer board_num) throws Exception;
 
-  public List<BoardVO> list() throws Exception;
+  public List<BoardVO> getBoardList() throws Exception;
 
-  public List<BoardVO> listPage(int page) throws Exception;
+//  public List<BoardVO> listPage(int page) throws Exception;
 
 	/*
 	 * public List<BoardVO> listCriteria(Criteria cri) throws Exception;

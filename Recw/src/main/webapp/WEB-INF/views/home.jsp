@@ -45,7 +45,7 @@
 </head>
 
 
-<%@include file="include/nav.jsp"%>
+<%@include file="include/header.jsp"%>
 <body>
 
 
@@ -60,9 +60,9 @@
 						something more unique.</p>
 					<p>
 						<a class="btn btn-primary btn-lg" href="#" role="button">Learn
-							more &raquo;</a> <a class="btn btn-primary btn-sm" href="board/list"
+							more &raquo;</a> <a class="btn btn-primary btn-sm" href="board/boardList"
 							role="button">임시 게시판 리스트 버튼 &raquo;</a> <a
-							class="btn btn-primary btn-sm" href="board/insert" role="button">임시
+							class="btn btn-primary btn-sm" href="board/boardWrite" role="button">임시
 							게시판 입력 버튼 &raquo;</a>
 					</p>
 				</div>
