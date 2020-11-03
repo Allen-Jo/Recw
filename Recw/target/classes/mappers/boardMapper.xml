@@ -5,11 +5,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.recw.mapper.BoardMapper">
 
-<!--  <insert id="create">
+  <insert id="create">
+  	insert into board(board_title, nickname, board_category,board_content,board_date)
+  	values (#{board_title}, #{nickname}, #{board_category},#{board_content},#{sysdate})
 
  </insert>
 
- <select id="read" resultType="com.recw.vo.BoardVO">
+<!--  <select id="read" resultType="com.recw.vo.BoardVO">
  
  </select>
 
@@ -19,19 +21,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
  <delete id="delete">
 
- </delete>
+ </delete> -->
 
- <select id="listAll" resultType="com.recw.vo.BoardVO">
+ <select id="getBoardList" resultType="com.recw.board.vo.BoardVO">
+ <![CDATA[
+ 	select
+ 		board_num,board_title,nickname,board_category,board_content,board_date,board_count,board_like
+ 	from
+ 	  board
+ 	 where board_num > 0
+ ]]>  
+ </select>
+ 
+<!--  <select id="listPage" resultType="BoardVO">
  <![CDATA[
  
  ]]>  
  </select>
- 
- <select id="listPage" resultType="BoardVO">
- <![CDATA[
- 
- ]]>  
- </select> -->
-
+ -->
   
 </mapper>

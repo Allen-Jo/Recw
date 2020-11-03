@@ -1,5 +1,7 @@
 package com.recw.board.controller;
 
+import javax.inject.Inject;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,69 +9,81 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.recw.board.service.BoardService;
+import com.recw.board.service.IBoardService;
 import com.recw.board.vo.BoardVO;
 
-
 @Controller
-@RequestMapping("/board")
+@RequestMapping("/board/*")
 public class BoardController {
+
+	@Inject
+	private IBoardService service;
 	
-	private BoardService service;
+	//게시판 게시물 입력 페이지 이동
+	@RequestMapping(value = "/boardWrite", method = RequestMethod.GET)
+	public String write(Model model) {
+		
+		return "board/boardWrite";
+	}
+	//게시판 게시물 DB 입력
+	@RequestMapping(value = "/boardInsert", method = RequestMethod.POST)
+	public String registPOST(BoardVO board, RedirectAttributes rttr) throws Exception {
+
+		service.regist(board);
+
+		rttr.addFlashAttribute("msg", "success");
+		return "redirect:/board/list";
+	}
 	
 	/*
+	 * //게시판 게시물 목록 페이지 이동
 	 * 
+	 * @RequestMapping(value = "/boardList", method = RequestMethod.GET) public
+	 * String listProc(Model model) {
 	 * 
-	 * @RequestMapping(value = "list", method = RequestMethod.GET) public String
-	 * list() { System.out.println("BoardController.list()"); return "board/list"; }
+	 * return "board/boardList"; }
 	 */
-	
-	 @RequestMapping(value = "/insert", method = RequestMethod.POST)
-	  public String registPOST(BoardVO board, RedirectAttributes rttr) throws Exception {
+	//게시물 목록 페이지 출력
+	@RequestMapping(value = "/boardList", method = RequestMethod.GET)
+	public void list(Model model) throws Exception {
 
+		model.addAttribute("getBoardList", service.getBoardList());
+		
+	}
 
-	    service.regist(board);
+	//게시물 읽기
+	@RequestMapping(value = "/read", method = RequestMethod.GET)
+	public void read(@RequestParam("board_num") int board_num, Model model) throws Exception {
 
-	    rttr.addFlashAttribute("msg", "success");
-	    return "redirect:/board/listAll";
-	  }
+		model.addAttribute(service.read(board_num));
+	}
 
-	  @RequestMapping(value = "/list", method = RequestMethod.GET)
-	  public void listAll(Model model) throws Exception {
+	//게시물 삭제
+	@RequestMapping(value = "/remove", method = RequestMethod.POST)
+	public String remove(@RequestParam("board_num") int board_num, RedirectAttributes rttr) throws Exception {
 
-	    model.addAttribute("list", service.list());
-	  }
-	  //읽기
-	  @RequestMapping(value = "/read", method = RequestMethod.GET)
-	  public void read(@RequestParam("board_num") int board_num, Model model) throws Exception {
+		service.remove(board_num);
 
-	    model.addAttribute(service.read(board_num));
-	  }
-	  //삭제
-	  @RequestMapping(value = "/remove", method = RequestMethod.POST)
-	  public String remove(@RequestParam("board_num") int board_num, RedirectAttributes rttr) throws Exception {
+		rttr.addFlashAttribute("msg", "SUCCESS");
 
-	    service.remove(board_num);
+		return "redirect:/board/list";
+	}
 
-	    rttr.addFlashAttribute("msg", "SUCCESS");
+	// 수정전 번호
+	@RequestMapping(value = "/modify", method = RequestMethod.GET)
+	public void modifyGET(int board_num, Model model) throws Exception {
 
-	    return "redirect:/board/list";
-	  }
-	  //수정전 번호 
-	  @RequestMapping(value = "/modify", method = RequestMethod.GET)
-	  public void modifyGET(int board_num, Model model) throws Exception {
+		model.addAttribute(service.read(board_num));
+	}
 
-	    model.addAttribute(service.read(board_num));
-	  }
-	  //수정
-	  @RequestMapping(value = "/modify", method = RequestMethod.POST)
-	  public String modifyPOST(BoardVO board, RedirectAttributes rttr) throws Exception {
+	//게시물 수정
+	@RequestMapping(value = "/modify", method = RequestMethod.POST)
+	public String modifyPOST(BoardVO board, RedirectAttributes rttr) throws Exception {
 
+		service.modify(board);
+		rttr.addFlashAttribute("msg", "SUCCESS");
 
-	    service.modify(board);
-	    rttr.addFlashAttribute("msg", "SUCCESS");
-
-	    return "redirect:/board/list";
-	  }
+		return "redirect:/board/list";
+	}
 
 }

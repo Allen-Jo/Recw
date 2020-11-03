@@ -38,21 +38,20 @@ public class BoardDAO implements IBoardDAO {
   }
 
   @Override
-  public List<BoardVO> list() throws Exception {
-    return session.selectList(namespace + ".list");
+  public List<BoardVO> getBoardList() throws Exception {
+	 // List<BoardVO> a = 
+    return session.selectList(namespace + ".getBoardList");
   }
 
-  @Override
-  public List<BoardVO> listPage(int page) throws Exception {
-
-    if (page <= 0) {
-      page = 1;
-    }
-
-    page = (page - 1) * 10;
-
-    return session.selectList(namespace + ".listPage", page);
-  }
+	/*
+	 * @Override public List<BoardVO> listPage(int page) throws Exception {
+	 * 
+	 * if (page <= 0) { page = 1; }
+	 * 
+	 * page = (page - 1) * 10;
+	 * 
+	 * return session.selectList(namespace + ".listPage", page); }
+	 */
 }
 
 

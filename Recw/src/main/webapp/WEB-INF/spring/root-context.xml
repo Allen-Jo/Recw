@@ -18,7 +18,7 @@
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
 		<!-- 
 		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.Driverspy" /> -->
-		<property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:xe"/>
+		<property name="url" value="jdbc:oracle:thin:@jsc9108.iptime.org:33779:xe"/>
 		<property name="username" value="baskin"/>
 		<property name="password" value="robbins31"/>
 
@@ -39,7 +39,6 @@
 		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/>
 	</bean>
 	<!-- Dao(persitence) 자동으로 만들어주기 위한 위치 -->
-	<!-- <mybatis-spring:scan base-package="com.recw"/> -->
 	<context:component-scan base-package="com.recw" />
 	
 </beans>
