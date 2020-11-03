@@ -9,6 +9,14 @@ CREATE TABLE BOARD (
 	board_count	number(10) DEFAULT 0	NULL,
 	board_like	number(10) DEFAULT 0	NULL	
 );
-
+   
+create sequence board_seq
+  START WITH 1
+  INCREMENT BY 1
+  MAXVALUE 999999999
+  MINVALUE 1
+  NOCYCLE;
+  
+  DROP SEQUENCE seq_board;
 desc board;
 drop table board;

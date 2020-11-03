@@ -4,16 +4,29 @@
 
 <mapper namespace="com.recw.mapper.MemberMapper">
 
-	<select id="getTime" resultType="string">
-		select now()
+	<select id="checkEmail" parameterType="com.recw.member.vo.MemberVO" resultType="java.lang.Integer">
+		<![CDATA[
+		SELECT COUNT(*) FROM MEMBER WHERE MEM_EMAIL = #{email}
+		]]>
 	</select>
 
-
-	<insert id="insertMember">
-		insert into member (mem_num,email,password,nickname,level) values
-		(#{mem_num},#{email},#{password},#{nickname},#{level}
-	
+	<select id="checkNick" parameterType="java.lang.String" resultType="java.lang.Integer">
+		<![CDATA[
+		SELECT COUNT(*) FROM MEMBER WHERE MEM_NICKNAME = #{nickname}
+		]]>
+	</select>
+	<insert id="insertMember" parameterType="com.recw.member.vo.MemberVO">
+		<![CDATA[
+			INSERT INTO MEMBER(MEM_NUM, MEM_EMAIL, MEM_PASSWORD, MEM_NICKNAME, MEM_REG_DATE, MEM_LEVEL) VALUES
+			(member_SEQ.nextval, #{email}, #{password}, #{nickname}, SYSDATE, 0)
+		]]>
 	</insert>
+	
+	<select id="loginMemver" parameterType="com.recw.member.vo.MemberVO" resultType="com.recw.member.vo.MemberVO">
+	<![CDATA[
+			SELECT * FROM MEMBER WHERE MEM_EMAIL = #{email} AND MEM_PASSWORD = #{password}
+		]]>
+	</select>
 
 
 </mapper>

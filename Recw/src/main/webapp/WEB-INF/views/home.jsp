@@ -71,10 +71,10 @@
 		<div class="col-md-2 themed-grid-col">
 			<h3>로그인</h3>
 			<p>
-				<a class="btn btn-primary btn-sm" href="member/login" role="button">임시
-					로그인 버튼 &raquo;</a> <a class="btn btn-primary btn-sm" href="member/join"
-					role="button">임시 회원가입 버튼 &raquo;</a>
-			</p>
+					<a class="btn btn-secondary" href="member/login" role="button">임시 로그인 버튼 &raquo;</a> 
+					<a class="btn btn-secondary" href="member/terms" role="button">임시 회원가입 버튼 &raquo;</a>
+					<a class="btn btn-secondary" href="member/joinView" role="button">임시 회원가입 버튼2 &raquo;</a>
+				</p>
 		</div>
 	</div>
 	<div class="row">
