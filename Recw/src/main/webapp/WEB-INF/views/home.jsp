@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ page session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
@@ -7,37 +8,40 @@
 <head>
 <title>Home</title>
 
-<link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/jumbotron/">
+<link rel="canonical"
+	href="https://getbootstrap.com/docs/4.5/examples/jumbotron/">
 <!-- 부트스트립 js/css 루트 -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.min.js"></script>
 
 
-<link href="${path}/resources/css/jumbotron.css" rel="stylesheet" />
+<link href="${path}
+ rel="stylesheet" />
 <link href="${path}/resources/css/bootstrap.min.css" rel="stylesheet">
 
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
+<style>
+.bd-placeholder-img {
+	font-size: 1.125rem;
+	text-anchor: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
 
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-    </style>
+@media ( min-width : 768px) {
+	.bd-placeholder-img-lg {
+		font-size: 3.5rem;
+	}
+}
+</style>
+
 </head>
 
 
-<%@include file ="include/nav.jsp" %>
+<%@include file="include/nav.jsp"%>
 <body>
-	
+
 	<main role="main">
 
 		<!-- Main jumbotron for a primary marketing message or call to action -->
@@ -58,11 +62,12 @@
 			<div class="container">
 				<h3>로그인</h3>
 				<p>
-					<a class="btn btn-secondary" href="member/login" role="button">임시 로그인 버튼 &raquo;</a>
-					<a class="btn btn-secondary" href="member/join" role="button">임시 회원가입 버튼 &raquo;</a>
+					<a class="btn btn-secondary" href="member/login" role="button">임시 로그인 버튼 &raquo;</a> 
+					<a class="btn btn-secondary" href="member/terms" role="button">임시 회원가입 버튼 &raquo;</a>
+					<a class="btn btn-secondary" href="member/join_succ" role="button">임시 회원가입 버튼2 &raquo;</a>
 				</p>
 			</div>
-		
+
 		</div>
 
 		<div class="container">
@@ -108,7 +113,7 @@
 		</div>
 		<!-- /container -->
 	</main>
-<%@include file ="include/footer.jsp" %>
+	<%@include file="include/footer.jsp"%>
 
 </body>
 </html>

@@ -4,16 +4,52 @@
 
 <mapper namespace="com.recw.mapper.MemberMapper">
 
-	<select id="getTime" resultType="string">
-		select now()
+	<!-- 이메일 인증 전 키 값 등록 -->
+	<update id="getKey">
+		UPDATE MEMBER SET MEM_KEY = #{param2} WHERE MEM_EMAIL = #{param1}
+	</update>
+	
+	<!-- 이메일 인증 확인 키 값이 'Y'로 변경-->
+	<update id="alterKey">
+		UPDATE MEMBER SET MEM_KEY = 'Y' WHERE MEM_EMAIL = #{param1} AND MEM_KEY = #{param2}
+	</update>
+
+	<!-- 이메일 중복 체크 -->
+	<select id="checkEmail" parameterType="java.lang.String" resultType="java.lang.Integer">
+		<![CDATA[
+		SELECT COUNT(*) FROM MEMBER WHERE MEM_EMAIL = #{mem_email}
+		]]>
 	</select>
 
-
-	<insert id="insertMember">
-		insert into member (mem_num,email,password,nickname,level) values
-		(#{mem_num},#{email},#{password},#{nickname},#{level}
+	<!-- 닉네임 중복 체크 -->
+	<select id="checkNick" parameterType="java.lang.String" resultType="java.lang.Integer">
+		<![CDATA[
+		SELECT COUNT(*) FROM MEMBER WHERE MEM_NICKNAME = #{mem_nickname}
+		]]>
+	</select>
 	
+	<!-- 회원 등록 -->
+	<insert id="insertMember"
+		parameterType="com.recw.member.vo.MemberVO">
+		<![CDATA[
+			INSERT INTO MEMBER(MEM_NUM, MEM_EMAIL, MEM_PASSWORD, MEM_NICKNAME, MEM_REG_DATE, MEM_LEVEL) VALUES
+			(member_SEQ.nextval, #{mem_email}, #{mem_password}, #{mem_nickname}, SYSDATE, 0)
+		]]>
 	</insert>
+
+	<!-- 로그인 체크 -->
+	<select id="loginMember" resultType="java.lang.String">
+	<![CDATA[
+			SELECT count(*) FROM MEMBER WHERE MEM_EMAIL = #{mem_email} AND MEM_PASSWORD = #{mem_password}
+		]]>
+	</select>
+	
+	<!-- 회원 세션 정보 -->
+	<select id="viewMember" resultType="java.lang.String">
+	<![CDATA[
+			SELECT MEM_NICKNAME FROM MEMBER WHERE MEM_EMAIL = #{mem_email} AND MEM_PASSWORD = #{mem_password}
+		]]>
+	</select>
 
 
 </mapper>
