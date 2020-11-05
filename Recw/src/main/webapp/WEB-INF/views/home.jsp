@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page session="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 
@@ -15,8 +14,7 @@
 <script src="${path}/resources/js/bootstrap.bundle.min.js"></script>
 
 
-<link href="${path}
- rel="stylesheet" />
+<link href="${path}" rel="stylesheet" />
 <link href="${path}/resources/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
@@ -58,15 +56,33 @@
 				</p>
 			</div>
 		</div>
+
 		<div class="side-menu">
+
+			<%
+				if (session.getAttribute("mem_nick") == null) {
+			%>
 			<div class="container">
 				<h3>로그인</h3>
 				<p>
 					<a class="btn btn-secondary" href="member/login" role="button">임시 로그인 버튼 &raquo;</a> 
-					<a class="btn btn-secondary" href="member/terms" role="button">임시 회원가입 버튼 &raquo;</a>
+					<a class="btn btn-secondary" href="member/terms" role="button">임시 회원가입 버튼 &raquo;</a> 
 					<a class="btn btn-secondary" href="member/join_succ" role="button">임시 회원가입 버튼2 &raquo;</a>
 				</p>
 			</div>
+			<%
+				} else {
+			%>
+			<div class="container">
+				<p>
+					<h3>${sessionScope.mem_nick}님 환영합니다.</h3>
+					<a class="btn btn-secondary" href="member/logout" role="button">로그아웃&raquo;</a>
+				</p>
+			</div>
+			<%
+				}
+			%>
+
 
 		</div>
 

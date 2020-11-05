@@ -1,7 +1,6 @@
 package com.recw.member.service;
 
-import java.util.List;
-
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.recw.member.vo.MemberVO;
@@ -31,5 +30,11 @@ public interface IMemberService {
 
 	//로그인
 	public boolean login_Member(MemberVO vo, HttpSession session);
-
+	
+	//이메일 키
+//	public void mailSendWithUserKey(String email, String nickname, HttpServletRequest request);
+	public void mailSendWithUserKey(MemberVO vo, HttpServletRequest request);
+	
+	//이메일 확인키
+	public int Certified(String email, String key);
 }

@@ -1,6 +1,6 @@
 package com.recw.member.dao;
 
-import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -32,7 +32,7 @@ public interface IMemberDao {
 	// 로그인
 	public boolean login_Member(MemberVO vo, HttpSession session);
 
-//	int GetKey(String user_id, String key);
-//	int alter_userKey(String user_id, String key);
+	int GetKey(MemberVO vo);
+	int alter_userKey(Map<String, String> map);
 
 }

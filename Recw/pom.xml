@@ -196,13 +196,21 @@
 			<artifactId>mail</artifactId>
 			<version>1.4.7</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-		<!-- 이메일 인증 -->
+		<!-- 이메일 인증 끝 -->
+
+		<!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+		<!-- 암호화 -->
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.9</version>
+		</dependency>
+		<!-- 암호화 끝 -->
 
 	</dependencies>
 

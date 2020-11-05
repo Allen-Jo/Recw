@@ -1,6 +1,5 @@
 package com.recw.member.dao;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -111,20 +110,26 @@ public class MemberDao implements IMemberDao {
 		}else {
 			return false;
 		}
-		
+			
 		
 	}
 
-//	@Override
-//	public int GetKey(String email, String key) {
-//		// TODO Auto-generated method stub
-//		return factory.openSession().update(namespace+".getKey", email, key);
-//	}
-//
-//	@Override
-//	public int alter_userKey(String user_id, String key) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
+	/**
+	 * 메일 인증키 등록
+	 */
+	@Override
+	public int GetKey(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return factory.openSession().update(namespace+".getKey", vo);
+	}
+
+	/**
+	 * 메일 인증 확인
+	 */
+	@Override
+	public int alter_userKey(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return factory.openSession().update(namespace+".alterKey", map);
+	}
 
 }

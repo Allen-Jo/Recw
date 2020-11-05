@@ -1,40 +1,24 @@
 package com.recw.member.controller;
 
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.Locale;
-
-import javax.servlet.http.HttpServletResponse;
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.recw.member.service.IMemberService;
+import com.recw.member.service.Sha256;
 import com.recw.member.vo.MemberVO;
 
 @Controller
 @RequestMapping("/member")
 public class MemberController {
-
-	@Autowired
-	IMemberService service;
-	Locale locale;
-
-	@ModelAttribute("serverTime")
-	public String getServerTime(Locale locale) {
-
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-
-		return dateFormat.format(date);
-	}
+	@Inject
+	public IMemberService service;
 
 	/**
 	 * 약관 화면
@@ -66,21 +50,29 @@ public class MemberController {
 	 */
 	@RequestMapping(value = "loginProc", method = RequestMethod.POST)
 	public String loginProc(MemberVO vo, HttpSession session) {
+		
+		String encryPassword = Sha256.encrypt(vo.getMem_password());
+		vo.setMem_password(encryPassword);
+		
 		boolean check = service.login_Member(vo, session);
 		if (check == true) {
 			return "redirect:/";
 		} else {
+			System.out.println("로그인 실패");
 			return "member/login";
 		}
 	}
+
 	/**
 	 * 로그아웃
 	 * 
 	 * @param session
+	 * @return 
 	 */
 	@RequestMapping(value = "logout")
-	public void logout(HttpSession session) {
+	public String logout(HttpSession session) {
 		session.invalidate();
+		return "redirect:/";
 	}
 
 	/**
@@ -95,19 +87,41 @@ public class MemberController {
 	}
 
 	/**
-	 * 회원가입 기능
+	 * 회원가입 + 인증 이메일 
+	 * encryPassword 비밀번호 암호화
+	 * reg_Member 회원등록 메서드 
+	 * mailSendWithUserKey
+	 * 메일 인증 메서드
 	 * 
 	 * @param vo
+	 * @param request
 	 * @return
 	 */
 	@RequestMapping(value = "joinProc", method = RequestMethod.POST)
-	public String joinReg(MemberVO vo) {
-		int result = service.reg_Member(vo);
-		if (result >= 0) {
-			return "redirect:/";
-		} else {
-			return "joinView";
-		}
+	public String joinReg(MemberVO vo, HttpServletRequest request) {
+
+		String encryPassword = Sha256.encrypt(vo.getMem_password());
+		vo.setMem_password(encryPassword);
+
+		service.reg_Member(vo);
+
+		service.mailSendWithUserKey(vo, request);
+
+		return "redirect:/";
+	}
+
+	/**
+	 * 이메일 인증 확인 컨트롤러
+	 * @param email
+	 * @param key
+	 * @return
+	 */
+	@RequestMapping(value = "Certified", method = RequestMethod.GET)
+	public String Certified(@RequestParam("Mem_email") String email, @RequestParam("Mem_key") String key) {
+
+		service.Certified(email, key);
+
+		return "/member/join_succ";
 	}
 
 	/**
@@ -134,8 +148,14 @@ public class MemberController {
 		return service.checkNick(nickname);
 	}
 
-//	@RequestMapping(value = "join_succ")
-//	public String test() {
-//		return "/member/join_succ";
-//	}
+	/**
+	 * 이메일 인증완료
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "join_succ")
+	public String join_succ() {
+		System.out.println("MemberController:join_succ: 메일 인증 완료");
+		return "/member/join_succ";
+	}
 }
